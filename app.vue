@@ -12,10 +12,13 @@
 				</div>
 			</div>
 			<div class="pt-3">
-				<div>Apps total: {{ appsTotal }}</div>
-				<div>Matches found: {{ matchingAppsCount }}</div>
+				<div class="row">
+					<div class="col-auto">Apps total: {{ appsTotal }}</div>
+					<div class="col-auto">Matches found: {{ matchingAppsCount }}</div>
+				</div>
+				<hr>
 				<div v-for="app in apps" :key="app.appId">
-					<AppItem :app="app"></AppItem>
+					<AppItem :app="app" @deleteApp="deleteApp"></AppItem>
 					<hr>
 				</div>
 			</div>
@@ -72,14 +75,27 @@ export default {
 			let response = await useFetch('/api/apps', { method: 'post', body: { apps: apps.value } })
 		}
 
-		const clearApps = async () => {
+		const clearApps = () => {
 			apps.value = []
+			matchingAppsCount.value = 0
+		}
+
+		const deleteApp = (appId) => {
+			apps.value.filter((app, index) => {
+				if (app.appId == appId) {
+					apps.value.splice(index, 1);
+
+					return true;
+				}
+				return false;
+			})
 		}
 
 		return {
 			getApps,
 			postApps,
 			clearApps,
+			deleteApp,
 			apps,
 			appsTotal,
 			matchingAppsCount,

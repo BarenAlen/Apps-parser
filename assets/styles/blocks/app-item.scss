@@ -1,0 +1,12 @@
+.app-item {
+    &__delete {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        margin-left: auto;
+        font-size: 2rem;
+    }
+}
