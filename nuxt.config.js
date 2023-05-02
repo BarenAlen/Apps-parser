@@ -14,6 +14,12 @@ export default defineNuxtConfig({
             }
         }
     },
+    components: [
+        {
+            path: '~/components',
+            pathPrefix: false,
+        }
+    ],
 
     runtimeConfig: {
         db_host: '127.0.0.1',
