@@ -1,0 +1,22 @@
+$font-family-base: 'Montserrat', sans-serif;
+
+$fsz-base: 1.1875rem; // 19px
+$fsz-sm: 0.75rem; // 12px
+
+$container-max-widths: (
+    sm: 540px,
+    md: 678px,
+    lg: 960px,
+    xl: 1190px,
+    xxl: 1354px
+);
+
+$grid-columns:                12;
+$grid-gutter-width:           2.75rem;
+$container-padding-x:         5.5rem;
+
+$theme-dark-bg: #000000;
+$theme-dark-color: #ffffff;
+
+$input-border-color: #090909;
+$input-border-width: 1px;

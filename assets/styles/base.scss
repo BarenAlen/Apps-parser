@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: $font-family-base;
+}
+a {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.page-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+hr {
+    border-top: 1px solid firebrick;
+}
+
+.fsz-sm {
+    font-size: $fsz-sm;
+}
