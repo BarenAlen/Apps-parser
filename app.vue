@@ -52,21 +52,29 @@ export default {
 
 			keywordsArray.value.forEach((item, index) => {
 				setTimeout(async () => {
-					let response = await useFetch('/api/apps', { method: 'get', params: { keyword: item.trim() } })
+					await useFetch('/api/apps',
+						{
+							method: 'get',
+							params: { keyword: item.trim() },
+							onResponse: ({ request, response, options }) => {
+								console.dir(response)
 	
-					if (response.data._rawValue) {
-
-						response.data._rawValue.forEach((newApp) => {
-							if (apps.value.some((app) => app.appId == newApp.appId )) {
-								matchingAppsCount.value++
-							} else {
-								apps.value = [...apps.value, newApp]
+								response._data.forEach((newApp) => {
+									if (apps.value.some((app) => app.appId == newApp.appId )) {
+										matchingAppsCount.value++
+									} else {
+										apps.value = [...apps.value, newApp]
+									}
+								})
+							},
+							onRequestError({ request, options, error }) {
+								console.error('RequestError', request, error)
+							},
+							onResponseError({ request, response, options }) {
+								console.error('ResponceError', response)
 							}
-						})
-						console.log(response.data._rawValue)
-					} else {
-						console.error('request error')
-					}
+						}
+					)
 				}, 1000 * index + 1)
 			})
 		}

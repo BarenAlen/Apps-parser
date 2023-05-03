@@ -11,7 +11,7 @@ export default defineEventHandler((event) => {
     })
     .then(
         (value) => {
-            console.log(value)
+            // console.log(value)
             return value
         },
         (error) => {
@@ -21,4 +21,6 @@ export default defineEventHandler((event) => {
     .catch((error) => {
         return error
     });
+
+    // console.log(promise.data._rawValue)
 })
