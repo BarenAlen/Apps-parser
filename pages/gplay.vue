@@ -1,35 +1,41 @@
 <template>
-	<div class="page-wrapper">
-		<div class="container">
-			<h1 class="mb-3">Google play</h1>
-			<div class="row">
-				<div class="col-6">
-					<label for="keywords">Keywords:</label>
-					<textarea class="form-control mt-1 mb-3" rows="6" id="keywords" v-model="keywords"></textarea>
-					<button @click="getApps" class="btn btn-primary me-3" type="button">Fetch</button>
-					<button @click="postApps" class="btn btn-secondary me-3" type="button">Write to DB</button>
-					<button @click="clearApps" class="btn btn-danger" type="button">Clear</button>
-				</div>
-			</div>
-			<div class="pt-3">
-				<div class="row">
-					<div class="col-auto">Apps total: {{ appsTotal }}</div>
-					<div class="col-auto">Matches found: {{ matchingAppsCount }}</div>
-				</div>
-				<hr>
-				<div v-for="app in apps" :key="app.appId">
-					<AppItem :app="app" @deleteApp="deleteApp"></AppItem>
-					<hr>
-				</div>
-			</div>
-			<!-- <small>
-				<pre>{{ apps.value.length }}</pre>
-			</small> -->
-		</div>
+    <div class="page-content">
+        <div class="container">
+            <h1 class="mb-3">Google play</h1>
+            <div class="row">
+                <div class="col-6">
+                    <label for="keywords">Keywords:</label>
+                    <textarea class="form-control mt-1 mb-3" rows="6" id="keywords" v-model="keywords"></textarea>
+                    <button @click="getApps" class="btn btn-primary me-3" type="button">Fetch</button>
+                    <button @click="postApps" class="btn btn-secondary me-3" type="button">Write to DB</button>
+                    <button @click="clearApps" class="btn btn-danger" type="button">Clear</button>
+                </div>
+                <div class="col-6">
+                    <CategoriesFetcherWidget></CategoriesFetcherWidget>
+                </div>
+            </div>
+            <div class="pt-3">
+                <div class="row">
+                    <div class="col-auto">Apps total: {{ appsTotal }}</div>
+                    <div class="col-auto">Matches found: {{ matchingAppsCount }}</div>
+                </div>
+                <hr>
+                <div v-for="app in apps" :key="app.appId">
+                    <AppItem :app="app" @deleteApp="deleteApp"></AppItem>
+                    <hr>
+                </div>
+            </div>
+            <!-- <small>
+                <pre>{{ apps.value.length }}</pre>
+            </small> -->
+        </div>
 	</div>
 </template>
 
 <script>
+definePageMeta({
+    layout: 'inner',
+})
 
 export default {
 	setup() {
