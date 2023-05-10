@@ -1,10 +1,5 @@
 <template>
     <div>
-        <!-- <small>
-            <pre>
-                {{ selectedCategories }}
-            </pre>
-        </small> -->
         <div class="mb-3">
             <label for="category-select" class="mb-1">Choose categories:</label>
             <select v-model="selectedCategories" multiple name="category-select" id="category-select" class="form-select category-select">
