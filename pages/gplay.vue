@@ -58,12 +58,12 @@ export default {
 
 			keywordsArray.value.forEach((item, index) => {
 				setTimeout(async () => {
-					await useFetch('/api/apps',
+					await useFetch('/api/gplay-apps',
 						{
 							method: 'get',
 							params: { keyword: item.trim() },
 							onResponse: ({ request, response, options }) => {
-								console.dir(response)
+								// console.dir(response)
 	
 								response._data.forEach((newApp) => {
 									if (apps.value.some((app) => app.appId == newApp.appId )) {
@@ -86,7 +86,7 @@ export default {
 		}
 
 		const postApps = async () => {
-			let response = await useFetch('/api/apps', { method: 'post', body: { apps: apps.value } })
+			let response = await useFetch('/api/gplay-apps', { method: 'post', body: { apps: apps.value } })
 		}
 
 		const clearApps = () => {

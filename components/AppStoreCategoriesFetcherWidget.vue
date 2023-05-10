@@ -3,7 +3,7 @@
         <div class="mb-3">
             <label for="category-select" class="mb-1">Choose categories:</label>
             <select v-model="selectedCategories" multiple name="category-select" id="category-select" class="form-select category-select">
-                <option v-for="(key, value) in categories" :key="key" :value="value">{{ key }}</option>
+                <option v-for="(value, key) in categories" :key="value" :value="value">{{ key }}</option>
             </select>
         </div>
         <div class="row align-items-center">
@@ -35,12 +35,49 @@ export default {
 		});
 
 		const getCategories = async () => {
-            await useFetch('/api/gplay-categories',
+            await useFetch('/api/appstore-categories',
                 {
                     method: 'get',
                     onResponse: ({ request, response, options }) => {
-                        // console.log(response)
+                        console.log(response)
                         categories.value = response._data
+                    },
+                    onRequestError({ request, options, error }) {
+                        console.error('RequestError', request, error)
+                    },
+                    onResponseError({ request, response, options }) {
+                        console.error('ResponceError', response)
+                    }
+                }
+            )
+            console.log('get Categories')
+        }
+
+        const postCategories = async () => {
+            loading.value = true
+
+            await useFetch('/api/appstore-categories',
+                {
+                    method: 'post',
+                    body: { categories: selectedCategories.value },
+                    onResponse: ({ request, response, options }) => {
+                        console.log('Response: ', response)
+                        loading.value = false
+                        getCount()
+                    },
+                }
+            )
+
+            // console.log('Response: ', response)
+        }
+
+        const getCount = async () => {
+            await useFetch('/api/appstore-count',
+                {
+                    method: 'get',
+                    onResponse: ({ request, response, options }) => {
+                        console.log(response)
+                        total.value = response._data
                     },
                     onRequestError({ request, options, error }) {
                         console.error('RequestError', request, error)
@@ -53,28 +90,11 @@ export default {
             // console.log('get Categories')
         }
 
-        const postCategories = async () => {
-            loading.value = true
-
-            await useFetch('/api/gplay-categories',
-                {
-                    method: 'post',
-                    body: { categories: selectedCategories.value },
-                    onResponse: ({ request, response, options }) => {
-                        console.log('Response: ', response)
-                        loading.value = false
-                        total.value = response._data.total
-                    },
-                }
-            )
-
-            // console.log('Response: ', response)
-        }
-
         return {
             categories,
             selectedCategories,
             postCategories,
+            getCount,
             loading,
             total
         }

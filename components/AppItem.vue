@@ -30,7 +30,10 @@
 			</div>
 			<div class="col-12 py-3" v-show="isDescriptionVisible">
 				<div class="fsz-sm mb-1">Description:</div>
-				<div v-html="app.summary"></div>
+				<div v-if="app.summary" v-html="app.summary"></div>
+				<div class="mt-2" v-else>
+					<pre> {{app.description}} </pre>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -66,5 +69,7 @@ export default {
 </script>
 
 <style>
-
+	pre {
+		white-space: break-spaces;
+	}
 </style>

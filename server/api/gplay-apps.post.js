@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
 
     body.apps.forEach((el, index) => {
         if (el.title) {
+            let categoryNm = 'SEARCH'
             var title = el.title.replaceAll('\"', '\'')
             var developer = el.developer.replaceAll('\"', '\'')
             var summary = el.summary.replaceAll('\"', '\'')
@@ -24,7 +25,7 @@ export default defineEventHandler(async (event) => {
                 let isExists = results[0][Object.keys(results[0])[0]]
 
                 if (isExists == 0) {
-                    pool.query(`INSERT INTO gplay (title, appId, url, icon, developer, currency, price, free, summary, scoreText, score) VALUES ("` + title + `","` + el.appId + `","` + el.url + `","` + el.icon + `","` + developer + `","` + el.currency + `", ${el.price}, ${el.free}, "` + summary + `","` + scoreText + `", ${score})`)
+                    pool.query(`INSERT INTO gplay (category, title, appId, url, icon, developer, currency, price, free, summary, scoreText, score) VALUES ("` + categoryNm + `","` + title + `","` + el.appId + `","` + el.url + `","` + el.icon + `","` + developer + `","` + el.currency + `", ${el.price}, ${el.free}, "` + summary + `","` + scoreText + `", ${score})`)
                 }
             })
 
