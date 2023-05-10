@@ -56,7 +56,10 @@ export default defineEventHandler(async (event) => {
                             }
                         })
 
-                        resolve(value)
+                        pool.query('SELECT COUNT(*) FROM gplay', (err, results, fields) => {
+                            resolve({apps: value, total: results[0][Object.keys(results[0])[0]]})
+                        })
+
                     },
                     (error) => {
                         reject(error)
@@ -67,7 +70,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const delayedFetcher = async () => {
-        var arr = [];
+        let obj = { apps: [], total: 0 }
 
         for (let i = 0; i < body.categories.length; i++) {
             let categoryNm = body.categories[i]
@@ -75,9 +78,11 @@ export default defineEventHandler(async (event) => {
 
             for (let collectionNm in gplay.collection) {
                 try {
-                    newArr = await fetcher(categoryNm, collectionNm)
+                    let response = await fetcher(categoryNm, collectionNm)
+                    newArr = response.apps
 
-                    arr = [...arr, ...newArr]
+                    obj.apps = [...obj.apps, ...newArr]
+                    obj.total = response.total
                 }
                 catch(error) {
                     console.log(error)
@@ -85,7 +90,7 @@ export default defineEventHandler(async (event) => {
             }
         }
 
-        return arr
+        return obj
     }
 
     return delayedFetcher()

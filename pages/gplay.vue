@@ -16,7 +16,7 @@
             </div>
             <div class="pt-3">
                 <div class="row">
-                    <div class="col-auto">Apps total: {{ appsTotal }}</div>
+                    <div class="col-auto">Apps found: {{ appsTotal }}</div>
                     <div class="col-auto">Matches found: {{ matchingAppsCount }}</div>
                 </div>
                 <hr>
