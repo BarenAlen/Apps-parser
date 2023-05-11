@@ -20,14 +20,21 @@ export default defineNuxtConfig({
             pathPrefix: false,
         }
     ],
-
     router: {
         options: {
           linkActiveClass: "active",
           linkExactActiveClass: "exact-active"
         }
     },
-
+    modules: [
+        '@pinia/nuxt',
+    ],
+    imports: {
+        dirs: ['./stores'],
+    },
+    pinia: {
+        autoImports: ['defineStore', 'acceptHMRUpdate'],
+    },
     runtimeConfig: {
         // Настройки базы данных
         
