@@ -3,14 +3,15 @@ import mysql from 'mysql2';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
+    const config = useRuntimeConfig()
 
     // console.log(body.categories)
 
     const pool = mysql.createPool({
-        host: '127.0.0.1',
-        user: 'root',
-        password: '',
-        database: 'apps'
+        host: config.db_host,
+        user: config.db_user,
+        password: config.db_password,
+        database: config.db_name
     })
 
     pool.query(`
