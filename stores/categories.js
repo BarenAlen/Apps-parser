@@ -6,10 +6,12 @@ export const useCategory = defineStore('categories', {
 
     actions: {
         async getGplay() {
+
             await useFetch('/api/gplay-categories',
                 {
                     method: 'get',
                     onResponse: ({ request, response, options }) => {
+
                         this.gplay = response._data
                     },
                     onRequestError({ request, options, error }) {
@@ -21,7 +23,6 @@ export const useCategory = defineStore('categories', {
                 }
             )
         },
-
         async postGplay(categories) {
             const globalState = useGlobalState()
 
@@ -37,6 +38,41 @@ export const useCategory = defineStore('categories', {
                     },
                 }
             )
-        }
+        },
+
+        async getAppstore() {
+
+            await useFetch('/api/appstore-categories',
+                {
+                    method: 'get',
+                    onResponse: ({ request, response, options }) => {
+
+                        this.appstore = response._data
+                    },
+                    onRequestError({ request, options, error }) {
+                        console.error('RequestError', request, error)
+                    },
+                    onResponseError({ request, response, options }) {
+                        console.error('ResponceError', response)
+                    }
+                }
+            )
+        },
+        async postAppstore(categories) {
+            const globalState = useGlobalState()
+
+            globalState.setLoading(true)
+
+            await useFetch('/api/appstore-categories',
+                {
+                    method: 'post',
+                    body: { categories: categories },
+                    onResponse: ({ request, response, options }) => {
+                        console.log('Response: ', response)
+                        globalState.setLoading(false)
+                    },
+                }
+            )
+        },
     }
 })

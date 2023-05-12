@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
                         })
 
                         pool.query('SELECT COUNT(*) FROM appstore', (err, results, fields) => {
-                            resolve({apps: value, total: results[0][Object.keys(results[0])[0]]})
+                            resolve({apps: value})
                         })
 
                     },
@@ -72,7 +72,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const delayedFetcher = async () => {
-        let obj = { apps: [], total: 0 }
+        let obj = { apps: [] }
 
         for (let i = 0; i < body.categories.length; i++) {
             let categoryNm = body.categories[i]
@@ -84,9 +84,6 @@ export default defineEventHandler(async (event) => {
                     newArr = response.apps
 
                     obj.apps = [...obj.apps, ...newArr]
-                    obj.total = response.total
-
-                    console.log(response.total)
                 }
                 catch(error) {
                     console.log(error)

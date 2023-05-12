@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{globalState.loading}}
         <div class="mb-3">
             <label for="category-select" class="mb-1">Choose categories:</label>
             <select v-model="selectedCategories" multiple name="category-select" id="category-select" class="form-select category-select">
@@ -9,15 +8,15 @@
         </div>
         <div class="row align-items-center">
             <div class="col-6">
-                <button @click="postCategories" class="btn btn-primary" type="button">Scrape selected categories</button>
+                <button @click="postCategories" :disabled="globalState.loading" class="btn btn-primary" type="button">Scrape selected categories</button>
             </div>
             <div class="col-3">
                 <div v-show="globalState.loading" class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </div>
-            <div class="col-3" v-if="total > 0 && globalState.loading == false">
-                Total: {{ total }}
+            <div class="col-3 text-end">
+                Total: {{ count.gplay }}
             </div>
         </div>
     </div>
@@ -28,14 +27,19 @@ export default {
     setup() {
         const categories = useCategory()
         const globalState = useGlobalState()
+        const count = useCount()
 
         const selectedCategories = ref([])
-        const total = ref(0)
 
         categories.getGplay()
+        count.getGplay()
 
         const postCategories = () => {
-            categories.postGplay(selectedCategories.value)
+            categories
+                .postGplay(selectedCategories.value)
+                .then(() => {
+                    count.getGplay()
+                })
         }
 
         return {
@@ -43,7 +47,7 @@ export default {
             selectedCategories,
             postCategories,
             globalState,
-            total
+            count
         }
     },
 }

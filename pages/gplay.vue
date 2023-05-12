@@ -17,7 +17,6 @@
             <div class="pt-3">
                 <div class="row">
                     <div class="col-auto">Apps found: {{ appsTotal }}</div>
-                    <div class="col-auto">Matches found: {{ matchingAppsCount }}</div>
                 </div>
                 <hr>
                 <div v-for="app in apps" :key="app.appId">
@@ -25,9 +24,6 @@
                     <hr>
                 </div>
             </div>
-            <!-- <small>
-                <pre>{{ apps.value.length }}</pre>
-            </small> -->
         </div>
 	</div>
 </template>
@@ -47,7 +43,6 @@ export default {
 			return []
 		})
 		const apps = ref([])
-		const matchingAppsCount = ref(0)
 		const appsTotal = computed(() => {
 			let length = apps.value?.length
 			
@@ -67,7 +62,6 @@ export default {
 	
 								response._data.forEach((newApp) => {
 									if (apps.value.some((app) => app.appId == newApp.appId )) {
-										matchingAppsCount.value++
 									} else {
 										apps.value = [...apps.value, newApp]
 									}
@@ -81,7 +75,7 @@ export default {
 							}
 						}
 					)
-				}, 1000 * index + 1)
+				}, 500 * index + 1)
 			})
 		}
 
@@ -91,7 +85,6 @@ export default {
 
 		const clearApps = () => {
 			apps.value = []
-			matchingAppsCount.value = 0
 		}
 
 		const deleteApp = (appId) => {
@@ -112,7 +105,6 @@ export default {
 			deleteApp,
 			apps,
 			appsTotal,
-			matchingAppsCount,
 			keywords,
 			keywordsArray
 		}

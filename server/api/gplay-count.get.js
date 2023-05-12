@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     const fetcher = () => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                pool.query('SELECT COUNT(*) FROM appstore', (err, results, fields) => {
+                pool.query('SELECT COUNT(*) FROM gplay', (err, results, fields) => {
                     resolve(results[0][Object.keys(results[0])[0]])
                 })
             }, 500)
