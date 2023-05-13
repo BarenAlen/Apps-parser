@@ -59,7 +59,7 @@ export default {
 		}
 
 		const postApps = async () => {
-			let response = await useFetch('/api/gplay-apps', { method: 'post', body: { apps: apps.value } })
+			let response = await useFetch('/api/gplay-apps', { method: 'post', body: { apps: search.gplay } })
 		}
 
 		const clearApps = () => {

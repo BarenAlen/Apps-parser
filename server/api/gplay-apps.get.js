@@ -1,8 +1,16 @@
 import gplay from 'google-play-scraper';
+import mysql from 'mysql2';
 
 export default defineEventHandler((event) => {
-
+    const config = useRuntimeConfig()
     const params = getQuery(event)
+
+    const pool = mysql.createPool({
+        host: config.db_host,
+        user: config.db_user,
+        password: config.db_password,
+        database: config.db_name
+    })
 
     const fetcher = (keyword) => {
         return new Promise((resolve, reject) => {
@@ -14,12 +22,47 @@ export default defineEventHandler((event) => {
                 })
                 .then(
                     (value) => {
-                        resolve(value)
-                    },
-                    (error) => {
-                        reject(error)
+                        const isInDBChecker = (el) => {
+                            return new Promise((resolve, reject) => {
+                                let obj = { isInDB: false }
+
+                                pool.query(`SELECT EXISTS(SELECT * FROM gplay WHERE appId="`+el.appId+`")`, (err, results, fields) => {
+                                    let isExists = results[0][Object.keys(results[0])[0]]
+                                    
+                                    if (isExists == 1) {
+                                        obj.isInDB = true
+                                    }
+                                    resolve(Object.assign(el, obj))
+                                })
+                            })
+                        }
+
+                        const result = async () => {
+                            let apps = []
+
+                            for (let i = 0; i < value.length; i++) {
+                                let app = value[i]
+
+                                try {
+                                    let response = await isInDBChecker(app)
+
+                                    apps.push(app)
+                                }
+                                catch(error) {
+                                    console.log(error)
+                                }
+                            }
+
+                            return apps
+                        }
+
+                        return result()
+
                     }
                 )
+                .then((value) => {
+                    resolve(value)
+                })
                 .catch((error) => {
                     reject(error)
                 });
