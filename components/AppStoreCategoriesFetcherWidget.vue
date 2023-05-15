@@ -8,7 +8,7 @@
         </div>
         <div class="row align-items-center">
             <div class="col-6">
-                <button @click="postCategories" :disabled="globalState.loading" class="btn btn-primary" type="button">Scrape selected categories</button>
+                <button @click="postCategories" :disabled="globalState.loading || selectedCategories.length == 0" class="btn btn-primary" type="button">Scrape selected categories</button>
             </div>
             <div class="col-3">
                 <div v-show="globalState.loading" class="spinner-border" role="status">

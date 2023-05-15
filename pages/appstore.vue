@@ -6,20 +6,28 @@
 				<div class="col-6">
 					<label for="keywords">Keywords:</label>
 					<textarea class="form-control mt-1 mb-3" rows="6" id="keywords" v-model="keywords"></textarea>
-					<button @click="getApps" class="btn btn-primary me-3" type="button">Fetch</button>
-					<button @click="postApps" class="btn btn-secondary me-3" type="button">Write to DB</button>
-					<button @click="clearApps" class="btn btn-danger" type="button">Clear</button>
+					<div class="row align-items-center">
+						<div class="col-auto">
+							<button @click="getApps" :disabled="globalState.loading  || keywords.length == 0" class="btn btn-primary" type="button">Fetch</button>
+						</div>
+						<div class="col-auto">
+							<button @click="postApps" v-show="search.appstore.length > 0" :disabled="globalState.loading" class="btn btn-secondary" type="button">Write to DB</button>
+						</div>
+						<div class="col-auto">
+							<button @click="clearApps" v-show="search.appstore.length > 0" :disabled="globalState.loading" class="btn btn-danger" type="button">Clear</button>
+						</div>
+						<div class="col-auto ps-0 flex-grow-1 text-end">
+							Apps found: {{ appsTotal }}
+						</div>
+					</div>
 				</div>
 				<div class="col-6">
 					<AppStoreCategoriesFetcherWidget></AppStoreCategoriesFetcherWidget>
 				</div>
 			</div>
 			<div class="pt-3">
-				<div class="row">
-					<div class="col-auto">Apps found: {{ appsTotal }}</div>
-				</div>
 				<hr>
-				<div v-for="app in apps" :key="app.appId">
+				<div v-for="app in search.appstore" :key="app.appId">
 					<AppItem :app="app" @deleteApp="deleteApp"></AppItem>
 					<hr>
 				</div>
@@ -35,6 +43,10 @@ definePageMeta({
 
 export default {
     setup() {
+		const search = useSearch()
+		const globalState = useGlobalState()
+		const count = useCount()
+
 		const keywords = ref('')
 		const keywordsArray = computed(() => {
 			if (keywords.value.length > 0) {
@@ -42,58 +54,30 @@ export default {
 			}
 			return []
 		})
-		const apps = ref([])
 		const appsTotal = computed(() => {
-			let length = apps.value?.length
+			let length = search.appstore?.length
 			
 			return length
 		})
 
-		const getApps = () => {
-
-			keywordsArray.value.forEach((item, index) => {
-				setTimeout(async () => {
-					await useFetch('/api/appstore-apps',
-						{
-							method: 'get',
-							params: { keyword: item.trim() },
-							onResponse: ({ request, response, options }) => {
-								response._data.forEach((newApp) => {
-									if (apps.value.some((app) => app.appId == newApp.appId )) {
-									} else {
-										apps.value = [...apps.value, newApp]
-									}
-								})
-							},
-							onRequestError({ request, options, error }) {
-								console.error('RequestError', request, error)
-							},
-							onResponseError({ request, response, options }) {
-								console.error('ResponceError', response)
-							}
-						}
-					)
-				}, 500 * index + 1)
-			})
+		const getApps = async () => {
+			search.getAppstore(keywordsArray.value)
 		}
 
 		const postApps = async () => {
-			let response = await useFetch('/api/appstore-apps', { method: 'post', body: { apps: apps.value } })
+			search
+				.postAppstore()
+				.then(() => {
+					count.getAppstore()
+				})
 		}
 
 		const clearApps = () => {
-			apps.value = []
+			search.clearAppstore()
 		}
 
 		const deleteApp = (appId) => {
-			apps.value.filter((app, index) => {
-				if (app.appId == appId) {
-					apps.value.splice(index, 1);
-
-					return true;
-				}
-				return false;
-			})
+			search.deleteAppstoreApp(appId)
 		}
 
 		return {
@@ -101,10 +85,11 @@ export default {
 			postApps,
 			clearApps,
 			deleteApp,
-			apps,
 			appsTotal,
 			keywords,
-			keywordsArray
+
+			search,
+			globalState
 		}
 	},
 }

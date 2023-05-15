@@ -58,9 +58,7 @@ export default defineEventHandler(async (event) => {
                             }
                         })
 
-                        pool.query('SELECT COUNT(*) FROM appstore', (err, results, fields) => {
-                            resolve({apps: value})
-                        })
+                        resolve({apps: value})
 
                     },
                     (error) => {
