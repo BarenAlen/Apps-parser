@@ -10,10 +10,10 @@
 						<div class="col-auto">
 							<button @click="getApps" :disabled="globalState.loading  || keywords.length == 0" class="btn btn-primary" type="button">Fetch</button>
 						</div>
-						<div class="col-auto">
+						<div class="col-auto ps-0">
 							<button @click="postApps" v-show="search.appstore.length > 0" :disabled="globalState.loading" class="btn btn-secondary" type="button">Write to DB</button>
 						</div>
-						<div class="col-auto">
+						<div class="col-auto ps-0">
 							<button @click="clearApps" v-show="search.appstore.length > 0" :disabled="globalState.loading" class="btn btn-danger" type="button">Clear</button>
 						</div>
 						<div class="col-auto ps-0 flex-grow-1 text-end">
