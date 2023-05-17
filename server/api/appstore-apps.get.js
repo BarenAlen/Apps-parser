@@ -1,16 +1,8 @@
 import store from 'app-store-scraper';
-import mysql from 'mysql2';
 
 export default defineEventHandler((event) => {
-    const config = useRuntimeConfig()
     const params = getQuery(event)
-
-    const pool = mysql.createPool({
-        host: config.db_host,
-        user: config.db_user,
-        password: config.db_password,
-        database: config.db_name
-    })
+    const { pool } = useMySQL()
 
     const fetcher = (keyword) => {
         return new Promise((resolve, reject) => {

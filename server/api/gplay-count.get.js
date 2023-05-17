@@ -1,13 +1,5 @@
-import mysql from 'mysql2';
-
 export default defineEventHandler(async (event) => {
-
-    const pool = mysql.createPool({
-        host: '127.0.0.1',
-        user: 'root',
-        password: '',
-        database: 'apps'
-    })
+    const { pool } = useMySQL()
 
     const fetcher = () => {
         return new Promise((resolve, reject) => {
@@ -15,7 +7,7 @@ export default defineEventHandler(async (event) => {
                 pool.query('SELECT COUNT(*) FROM gplay', (err, results, fields) => {
                     resolve(results[0][Object.keys(results[0])[0]])
                 })
-            }, 500)
+            }, 2000)
         })
     }
 
