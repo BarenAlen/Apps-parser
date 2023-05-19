@@ -1,8 +1,15 @@
 import store from 'app-store-scraper';
+import mysql from 'mysql2';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
-    const { pool } = useMySQL()
+    const config = useRuntimeConfig()
+    const pool = mysql.createPool({
+        host: config.db_host,
+        user: config.db_user,
+        password: config.db_password,
+        database: config.db_name
+    })
 
     pool.query(`
         CREATE TABLE IF NOT EXISTS appstore (id INT AUTO_INCREMENT PRIMARY KEY, category VARCHAR(255), title VARCHAR(255), appId VARCHAR(255), url TEXT, icon TEXT, developer VARCHAR(255), currency VARCHAR(255), price FLOAT, free BOOLEAN, summary TEXT, scoreText VARCHAR(255), score FLOAT) DEFAULT CHARSET=utf8mb4;

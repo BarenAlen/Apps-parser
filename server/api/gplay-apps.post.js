@@ -1,6 +1,14 @@
+import mysql from 'mysql2';
+
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
-    const { pool } = useMySQL()
+    const config = useRuntimeConfig()
+    const pool = mysql.createPool({
+        host: config.db_host,
+        user: config.db_user,
+        password: config.db_password,
+        database: config.db_name
+    })
 
     const fetcher = (el) => {
         return new Promise((resolve, reject) => {
@@ -17,6 +25,8 @@ export default defineEventHandler(async (event) => {
     
                     if (isExists == 0) {
                         pool.query(`INSERT INTO gplay (category, title, appId, url, icon, developer, currency, price, free, summary, scoreText, score) VALUES ("` + categoryNm + `","` + title + `","` + el.appId + `","` + el.url + `","` + el.icon + `","` + developer + `","` + el.currency + `", ${el.price}, ${el.free}, "` + summary + `","` + scoreText + `", ${score})`, () => {
+
+                            console.log(err)
                             resolve(el)
                         })
                     }
