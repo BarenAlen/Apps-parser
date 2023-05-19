@@ -4,12 +4,12 @@ export default defineNuxtConfig({
         '~/assets/styles/main.scss'
     ],
     vite: {
-        server: {
-            https: true,
-            hmr: {
-                protocol: 'wss'
-            }
-        },
+        // server: {
+        //     https: true,
+        //     hmr: {
+        //         protocol: 'wss'
+        //     }
+        // },
         css: {
             preprocessorOptions: {
                 scss: {
@@ -44,9 +44,9 @@ export default defineNuxtConfig({
     runtimeConfig: {
         // Настройки базы данных
         
-        db_host: '127.0.0.1',
-        db_user: 'root',
-        db_password: '',
-        db_name: 'apps'
+        db_host: process.env.DB_HOST,
+        db_user: process.env.DB_USER,
+        db_password: process.env.DB_PASSWORD,
+        db_name: process.env.DB_NAME
     }
 })
