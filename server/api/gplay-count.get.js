@@ -5,7 +5,12 @@ export default defineEventHandler(async (event) => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 pool.query('SELECT COUNT(*) FROM gplay', (err, results, fields) => {
-                    resolve(results[0][Object.keys(results[0])[0]])
+                    if (err) {
+                        reject(err)
+                        console.log(err)
+                    } else {
+                        resolve(results[0][Object.keys(results[0])[0]])
+                    }
                 })
             }, 2000)
         })

@@ -1,5 +1,3 @@
-import mysql from 'mysql2';
-
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     const { pool } = useMySQL()
@@ -22,6 +20,8 @@ export default defineEventHandler(async (event) => {
                             resolve(el)
                         })
                     }
+
+                    console.log(err)
                 })
     
             }
