@@ -4,12 +4,12 @@ export default defineNuxtConfig({
         '~/assets/styles/main.scss'
     ],
     vite: {
-        // server: {
-        //     https: true,
-        //     hmr: {
-        //         protocol: 'wss'
-        //     }
-        // },
+        server: {
+            https: true,
+            hmr: {
+                protocol: 'wss'
+            }
+        },
         css: {
             preprocessorOptions: {
                 scss: {
