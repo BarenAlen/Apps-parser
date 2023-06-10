@@ -2,6 +2,17 @@
     <div class="page-content">
 		<div class="container">
 			<h1 class="mb-3">App Store</h1>
+			<div class="row mb-3">
+				<div class="col-auto pe-0">
+					<button @click="createTable" type="button" class="btn btn-primary">Create table</button>
+				</div>
+				<div class="col-auto pe-0">
+					<button @click="clearTable" type="button" class="btn btn-secondary">Clear table</button>
+				</div>
+				<div class="col-auto pe-0">
+					<button @click="dropTable" type="button" class="btn btn-danger">Drop table</button>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-6">
 					<label for="keywords">Keywords:</label>
@@ -63,7 +74,6 @@ export default {
 		const getApps = async () => {
 			search.getAppstore(keywordsArray.value)
 		}
-
 		const postApps = async () => {
 			search
 				.postAppstore()
@@ -71,13 +81,33 @@ export default {
 					count.getAppstore()
 				})
 		}
-
 		const clearApps = () => {
 			search.clearAppstore()
 		}
-
 		const deleteApp = (appId) => {
 			search.deleteAppstoreApp(appId)
+		}
+
+		const dropTable = () => {
+			globalState
+				.tableAction({tableName: 'appstore', action: 'drop'})
+				.then(() => {
+					alert('Table appstore deleted')
+				})
+		}
+		const createTable = () => {
+			globalState
+				.tableAction({tableName: 'appstore', action: 'create'})
+				.then(() => {
+					alert('Table appstore ready')
+				})
+		}
+		const clearTable = () => {
+			globalState
+				.tableAction({tableName: 'appstore', action: 'clear'})
+				.then(() => {
+					alert('Table appstore cleared')
+				})
 		}
 
 		return {
@@ -87,6 +117,10 @@ export default {
 			deleteApp,
 			appsTotal,
 			keywords,
+
+			dropTable,
+			createTable,
+			clearTable,
 
 			search,
 			globalState

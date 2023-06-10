@@ -17,7 +17,9 @@ export default defineEventHandler((event) => {
                 gplay.search({
                     term: keyword.trim(),
                     num: 250,
-                    throttle: 10
+                    throttle: 10,
+                    fullDetail: true,
+                    // lang: 'ru'
                 })
                 .then(
                     (value) => {

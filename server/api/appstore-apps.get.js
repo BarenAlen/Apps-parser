@@ -19,6 +19,7 @@ export default defineEventHandler((event) => {
                     num: 50,
                     page: 1,
                     country : 'us',
+                    fullDetail: true
                 })
                 .then(
                     (value) => {

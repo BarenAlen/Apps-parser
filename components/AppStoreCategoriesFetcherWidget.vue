@@ -3,7 +3,7 @@
         <div class="mb-3">
             <label for="category-select" class="mb-1">Choose categories:</label>
             <select v-model="selectedCategories" multiple name="category-select" id="category-select" class="form-select category-select">
-                <option v-for="(value, key) in categories.appstore" :key="value" :value="value">{{ key }}</option>
+                <option v-for="(value, key) in categories.appstore" :key="value" :value="key">{{ key }}</option>
             </select>
         </div>
         <div class="row align-items-center">
@@ -34,9 +34,19 @@ export default {
         categories.getAppstore()
         count.getAppstore()
 
+        const fullSelectedCategories = computed(() => {
+            let arr = []
+            
+            selectedCategories.value.forEach((categoryKey) => {
+                arr.push({name: categoryKey, value: categories.appstore[categoryKey]})
+            })
+
+            return arr
+        })
+
         const postCategories = async () => {
             categories
-                .postAppstore(selectedCategories.value)
+                .postAppstore(fullSelectedCategories)
                 .then(() => {
                     count.getAppstore()
                 })
@@ -45,6 +55,7 @@ export default {
         return {
             categories,
             selectedCategories,
+            fullSelectedCategories,
             postCategories,
             globalState,
             count

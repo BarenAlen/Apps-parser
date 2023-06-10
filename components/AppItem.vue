@@ -1,7 +1,10 @@
 <template>
 	<div class="app-item" :class="{'in-db' : app.isInDB}">
+		<!-- <small>
+			<pre>{{ app }}</pre>
+		</small> -->
 		<div class="row align-items-center">
-			<div class="col-4 py-3 align-self-start">
+			<div class="col-3 py-3 align-self-start">
 				<div class="d-flex align-items-start">
 					<img :src="app.icon" width="46" class="d-inline-block me-2" alt="">
 					<div>
@@ -12,13 +15,17 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-3 py-3">
-				<div class="fsz-sm mb-1">Developer:</div>
-				{{ app.developer }}
+			<div class="col-2 py-3">
+				<div class="fsz-sm mb-1">Genre:</div>
+				{{ genre }}
+			</div>
+			<div class="col-2 py-3">
+				<div class="fsz-sm mb-1">Downloads:</div>
+				{{ app.installs }}
 			</div>
 			<div class="col-1 py-3">
 				<div class="fsz-sm mb-1">Rating:</div>
-				{{ app.scoreText }}
+				{{ app.scoreText || app.score  }}
 			</div>
 			<div class="col-1 py-3">
 				<div class="fsz-sm mb-1">Price:</div>
@@ -53,6 +60,15 @@ export default {
 	setup(props, { emit }) {
 		const isDescriptionVisible = ref(false)
 
+		const genre = computed(() => {
+			if (props.app.genre) {
+				return props.app.genre
+			}
+			if (props.app.primaryGenre) {
+				return props.app.primaryGenre
+			}
+		})
+
 		const toggleDescription = () => {
 			isDescriptionVisible.value = !isDescriptionVisible.value
 		}
@@ -64,7 +80,8 @@ export default {
 		return {
 			toggleDescription,
 			isDescriptionVisible,
-			handleAppItemDelete
+			handleAppItemDelete,
+			genre
 		}
 	},
 }

@@ -2,6 +2,17 @@
     <div class="page-content">
         <div class="container">
             <h1 class="mb-3">Google play</h1>
+			<div class="row mb-3">
+				<div class="col-auto pe-0">
+					<button @click="createTable" type="button" class="btn btn-primary">Create table</button>
+				</div>
+				<div class="col-auto pe-0">
+					<button @click="clearTable" type="button" class="btn btn-secondary">Clear table</button>
+				</div>
+				<div class="col-auto pe-0">
+					<button @click="dropTable" type="button" class="btn btn-danger">Drop table</button>
+				</div>
+			</div>
 			<!-- <small>
 				<pre>{{ keywords.length == 0 }}</pre>
 			</small> -->
@@ -64,7 +75,6 @@ export default {
 		const getApps = async () => {
 			search.getGplay(keywordsArray.value)
 		}
-
 		const postApps = async () => {
 			search
 				.postGplay()
@@ -73,13 +83,33 @@ export default {
 				})
 			
 		}
-
 		const clearApps = () => {
 			search.clearGplay()
 		}
-
 		const deleteApp = (appId) => {
 			search.deleteGplayApp(appId)
+		}
+
+		const dropTable = () => {
+			globalState
+				.tableAction({tableName: 'gplay', action: 'drop'})
+				.then(() => {
+					alert('Table gplay deleted')
+				})
+		}
+		const createTable = () => {
+			globalState
+				.tableAction({tableName: 'gplay', action: 'create'})
+				.then(() => {
+					alert('Table gplay ready')
+				})
+		}
+		const clearTable = () => {
+			globalState
+				.tableAction({tableName: 'gplay', action: 'clear'})
+				.then(() => {
+					alert('Table gplay cleared')
+				})
 		}
 
 		return {
@@ -89,6 +119,10 @@ export default {
 			deleteApp,
 			appsTotal,
 			keywords,
+
+			dropTable,
+			createTable,
+			clearTable,
 
 			search,
 			globalState

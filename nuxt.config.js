@@ -5,10 +5,10 @@ export default defineNuxtConfig({
     ],
     vite: {
         server: {
-            https: true,
-            hmr: {
-                protocol: 'wss'
-            }
+            // https: true,
+            // hmr: {
+            //     protocol: 'wss'
+            // }
         },
         css: {
             preprocessorOptions: {
