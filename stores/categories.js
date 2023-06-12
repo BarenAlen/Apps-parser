@@ -31,7 +31,11 @@ export const useCategory = defineStore('categories', {
             await useFetch('/api/gplay-categories',
                 {
                     method: 'post',
-                    body: { categories: categories },
+                    body: {
+                        categories: categories,
+                        lang: globalState.gplay.lang,
+                        country: globalState.gplay.country
+                    },
                     onResponse: ({ request, response, options }) => {
                         console.log('Response: ', response)
                         globalState.setLoading(false)
@@ -66,7 +70,11 @@ export const useCategory = defineStore('categories', {
             await useFetch('/api/appstore-categories',
                 {
                     method: 'post',
-                    body: { categories: categories },
+                    body: {
+                        categories: categories,
+                        lang: globalState.appstore.lang,
+                        country: globalState.appstore.country
+                    },
                     onResponse: ({ request, response, options }) => {
                         console.log('Response: ', response)
                         globalState.setLoading(false)

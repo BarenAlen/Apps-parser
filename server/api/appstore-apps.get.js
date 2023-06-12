@@ -18,8 +18,9 @@ export default defineEventHandler((event) => {
                     term: keyword.trim(),
                     num: 50,
                     page: 1,
-                    country : 'us',
-                    fullDetail: true
+                    fullDetail: true,
+                    lang: params.lang,
+                    country: params.country
                 })
                 .then(
                     (value) => {

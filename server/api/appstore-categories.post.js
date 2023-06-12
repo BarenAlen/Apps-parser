@@ -19,8 +19,9 @@ export default defineEventHandler(async (event) => {
                     category: category.value,
                     collection: collectionNm,
                     num: 200,
-                    lang: 'en',
-                    fullDetail: true
+                    fullDetail: true,
+                    lang: body.lang,
+                    country: body.country
                 })
                 .then(
                     (value) => {

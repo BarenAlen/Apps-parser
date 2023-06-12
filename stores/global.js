@@ -1,6 +1,22 @@
 export const useGlobalState = defineStore('global', {
     state: () => ({
-        loading: false
+        loading: false,
+        locales: [
+            {title: 'En', value: 'en'},
+            {title: 'Ru', value: 'ru'}
+        ],
+        countries: [
+            {title: 'Us', value: 'us'},
+            {title: 'Ru', value: 'ru'}
+        ],
+        gplay: {
+            country: 'us',
+            lang: 'en'
+        },
+        appstore: {
+            country: 'us',
+            lang: 'en'
+        }
     }),
     
     actions: {

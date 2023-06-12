@@ -11,10 +11,16 @@ export const useSearch = defineStore('search', {
             this.gplay = []
             globalState.setLoading(true)
 
+            console.log(globalState.gplay.lang)
+
             await useFetch('/api/gplay-apps',
                 {
                     method: 'get',
-                    params: { keywords: keywords },
+                    params: {
+                        keywords: keywords,
+                        lang: globalState.gplay.lang,
+                        country: globalState.gplay.country
+                    },
                     onResponse: ({ request, response, options }) => {
                         this.gplay = response._data
                         globalState.setLoading(false)
@@ -73,7 +79,11 @@ export const useSearch = defineStore('search', {
             await useFetch('/api/appstore-apps',
                 {
                     method: 'get',
-                    params: { keywords: keywords },
+                    params: {
+                        keywords: keywords,
+                        lang: globalState.appstore.lang,
+                        country: globalState.appstore.country
+                    },
                     onResponse: ({ request, response, options }) => {
                         this.appstore = response._data
                         globalState.setLoading(false)

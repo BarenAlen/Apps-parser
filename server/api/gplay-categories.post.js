@@ -20,7 +20,9 @@ export default defineEventHandler(async (event) => {
                     collection: collectionNm,
                     num: 2000,
                     throttle: 10,
-                    fullDetail: true
+                    fullDetail: true,
+                    lang: body.lang,
+                    country: body.country
                 })
                 .then(
                     (value) => {

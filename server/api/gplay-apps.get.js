@@ -19,7 +19,8 @@ export default defineEventHandler((event) => {
                     num: 250,
                     throttle: 10,
                     fullDetail: true,
-                    // lang: 'ru'
+                    lang: params.lang,
+                    country: params.country
                 })
                 .then(
                     (value) => {

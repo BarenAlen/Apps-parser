@@ -13,9 +13,14 @@
 					<button @click="dropTable" type="button" class="btn btn-danger">Drop table</button>
 				</div>
 			</div>
-			<!-- <small>
-				<pre>{{ keywords.length == 0 }}</pre>
-			</small> -->
+			<div class="row mb-3">
+				<div class="col-1 pe-0">
+					<UiSelect @selectOption="setLang" label="Lang" id="lang" name="lang" :options="globalState.locales"></UiSelect>
+				</div>
+				<div class="col-1 pe-0">
+					<UiSelect @selectOption="setCountry" label="Country" id="country" name="country" :options="globalState.countries"></UiSelect>
+				</div>
+			</div>
             <div class="row">
                 <div class="col-6">
                     <label for="keywords">Keywords:</label>
@@ -112,6 +117,13 @@ export default {
 				})
 		}
 
+		const setLang = (value) => {
+			globalState.gplay.lang = value
+		}
+		const setCountry = (value) => {
+			globalState.gplay.country = value
+		}
+
 		return {
 			getApps,
 			postApps,
@@ -119,6 +131,8 @@ export default {
 			deleteApp,
 			appsTotal,
 			keywords,
+			setLang,
+			setCountry,
 
 			dropTable,
 			createTable,
