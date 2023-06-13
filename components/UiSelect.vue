@@ -48,7 +48,9 @@ export default {
 <style lang="scss" scoped>
 .ui-select {
     select {
+        // padding: 5px 14px;
         width: 100%;
+        height: 38px;
     }
 }
 </style>

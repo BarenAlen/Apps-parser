@@ -6,8 +6,18 @@ export const useGlobalState = defineStore('global', {
             {title: 'Ru', value: 'ru'}
         ],
         countries: [
-            {title: 'Us', value: 'us'},
-            {title: 'Ru', value: 'ru'}
+            {title: 'Russia', value: 'ru'},
+            {title: 'USA', value: 'us'},
+            {title: 'Canada', value: 'ca'},
+            {title: 'Belarus', value: 'by'},
+            {title: 'Germany', value: 'de'},
+            {title: 'Kazakhstan', value: 'kz'},
+            {title: 'Armenia', value: 'am'},
+            {title: 'Azerbaijan', value: 'az'},
+            {title: 'Moldova', value: 'md'},
+            {title: 'Uzbekistan', value: 'uz'},
+            {title: 'Tajikistan', value: 'tj'},
+            {title: 'Kyrgyzstan', value: 'kg'},
         ],
         gplay: {
             country: 'us',

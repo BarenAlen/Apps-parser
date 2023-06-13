@@ -17,7 +17,7 @@
 				<div class="col-1 pe-0">
 					<UiSelect @selectOption="setLang" label="Lang" id="lang" name="lang" :options="globalState.locales"></UiSelect>
 				</div>
-				<div class="col-1 pe-0">
+				<div class="col-2">
 					<UiSelect @selectOption="setCountry" label="Country" id="country" name="country" :options="globalState.countries"></UiSelect>
 				</div>
 			</div>
