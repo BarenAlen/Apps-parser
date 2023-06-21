@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
                                     let isExists = results[0][Object.keys(results[0])[0]]
     
                                     if (isExists == 0) {
-                                        pool.query(`INSERT INTO appstore (category, genre, title, appId, downloads, currency, price, free, summary) VALUES ("` + category.name + `","` + el.primaryGenre + `","` + title + `","` + el.appId + `","` + 'undefined' + `","` + el.currency + `", ${el.price}, ${el.free}, "` + summary + `")`, (err) => {
+                                        pool.query(`INSERT INTO appstore (category, genre, title, appId, downloads, currency, price, free, summary) VALUES ("` + category.name + `","` + el.primaryGenre + `","` + title + `","` + el.id + `","` + 'undefined' + `","` + el.currency + `", ${el.price}, ${el.free}, "` + summary + `")`, (err) => {
                                             if (err) return log("Query failed. Error: %s. Query: %s", err, query);
                                         })
                                     }
