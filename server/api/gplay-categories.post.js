@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
                                     let isExists = results[0][Object.keys(results[0])[0]]
     
                                     if (isExists == 0) {
-                                        pool.query(`INSERT INTO gplay (category, genre, title, appId, downloads, currency, price, free, summary) VALUES ("` + categoryNm + `","` + el.genre + `","` + title + `","` + el.appId + `","` + el.downloads + `","` + el.currency + `", ${el.price}, ${el.free}, "` + summary + `")`, (err) => {
+                                        pool.query(`INSERT INTO gplay (category, genre, title, appId, downloads, currency, price, free, summary) VALUES ("` + categoryNm + `","` + el.genre + `","` + title + `","` + el.appId + `","` + el.installs + `","` + el.currency + `", ${el.price}, ${el.free}, "` + summary + `")`, (err) => {
                                             if (err) return log("Query failed. Error: %s. Query: %s", err, query);
                                         })
                                     }
