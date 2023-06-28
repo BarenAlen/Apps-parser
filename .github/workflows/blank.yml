@@ -15,16 +15,10 @@ jobs:
       - name: Run command on remote server
         uses: D3rHase/ssh-command-action@v0.2.2
         with:
-          host: 78.47.200.106
-          user: github
-          private_key: -----BEGIN OPENSSH PRIVATE KEY-----
-                      b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-                      QyNTUxOQAAACA728roIG+yg05DF43UkGlydtdycn5bIOBX0/dc10shhwAAALDQMzPl0DMz
-                      5QAAAAtzc2gtZWQyNTUxOQAAACA728roIG+yg05DF43UkGlydtdycn5bIOBX0/dc10shhw
-                      AAAECh3fhfljtRRpfXRMkYST+CEY0CpJ0OCTFGF5WvbHu6kTvbyuggb7KDTkMXjdSQaXJ2
-                      13Jyflsg4FfT91zXSyGHAAAAKHJvb3RAdWJ1bnR1LTRnYi1uYmcxLTEtTW9iaWRyaXZlbi
-                      1ub2RlanMBAgMEBQ==
-                      -----END OPENSSH PRIVATE KEY-----
+          host: ${{secrets.SSH_HOST}}
+          user: ${{secrets.SSH_USER}}
+          private_key: ${{secrets.SSH_PRIVATE_KEY}}
           command: |
+            echo "test"
             sudo cd /opt/Apps-parser-master
             sudo ls -lah
