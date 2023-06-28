@@ -20,5 +20,5 @@ jobs:
           private_key: ${{secrets.SSH_PRIVATE_KEY}}
           command: |
             echo "test"
-            sudo cd /opt/Apps-parser-master
-            sudo ls -lah
+            cd /opt/Apps-parser-master
+            ls -lah
