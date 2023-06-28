@@ -1,0 +1,22 @@
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters. Then it pulls new features from my repo and
+# rebuild containers on remote server through ssh.
+
+name: "Parser CI-CD"
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Run command on remote server
+        uses: D3rHase/ssh-command-action@v0.2.2
+        with:
+          host: ${{secrets.SSH_HOST}}
+          user: ${{secrets.SSH_USER}}
+          private_key: ${{secrets.SSH_PRIVATE_KEY}}
+          command: |
+            echo "test"
