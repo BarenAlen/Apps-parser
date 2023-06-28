@@ -19,7 +19,7 @@ jobs:
           user: ${{secrets.SSH_USER}}
           private_key: ${{secrets.SSH_PRIVATE_KEY}}
           command: |
-            export PATH=$PATH:/${{secrets.SSH_USER_NAME}}/.nvm/versions/node/v20.2.0/lib/node_modules/pm2/bin/pm2;
+            PATH=$PATH:/${{secrets.SSH_USER}}/.nvm/versions/node/v20.2.0/lib/node_modules/pm2/bin/pm2;
             cd /opt/Apps-parser-master;
             git checkout master;
             git pull;
