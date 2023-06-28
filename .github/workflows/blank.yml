@@ -19,6 +19,8 @@ jobs:
           user: ${{secrets.SSH_USER}}
           private_key: ${{secrets.SSH_PRIVATE_KEY}}
           command: |
-            echo "test1"
             cd /opt/Apps-parser-master
-            ls -lah
+            git checkout master;
+            git pull;
+            pm2 stop npm
+            pm2 start npm -- run dev
