@@ -22,5 +22,5 @@ jobs:
             cd /opt/Apps-parser-master;
             git checkout master;
             git pull;
-            pm2 stop npm;
-            pm2 start npm -- run dev;
+            /root/.nvm/versions/node/v20.2.0/lib/node_modules/pm2/bin/pm2 stop npm;
+            /root/.nvm/versions/node/v20.2.0/lib/node_modules/pm2/bin/pm2 start npm -- run dev;
